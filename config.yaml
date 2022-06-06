@@ -1,0 +1,59 @@
+baseurl: "/"
+theme: cocoa-eh-hugo-theme
+builddrafts: yes
+canonifyurls: yes
+contentdir: content
+languageCode: en-US
+layoutdir: layouts
+publishdir: public
+author: Saffron Evergreen
+title: It's Just Calculus
+disqusshortname: ''
+pluralizelisttitles: no
+disableKinds:
+  - taxonomy
+  - taxonomyTerm
+permalinks:
+  blog: blog/:slug/
+  home: home/:slug/
+  backround: about/:slug/
+  projects: projects/:slug/
+params:
+  colors:
+    background: '#f9f9f9'
+    background_dark: '#282a36'
+    code: '#87a5d2'
+    foreground: '#181d2a'
+    identifier: '#527fc1f'
+    identifier_dark: '#1a3152'
+    special: '#ffcb8d'
+    statement: '#ff8e91'
+    trivial: '#6a7a8b'
+    type: '#97d28b'
+    value: '#96c2d7'
+  copyright: This could be a copyright statement
+  dateform: Jan 4, 1994
+  dateformfull: Tue Jan 4 1994 15:04:05 MST
+  description: Blogdown
+  email: jonesmc@ohsu.edu
+  facebook: facebook_id
+  faviconfile: img/logo.png
+  github: example
+  highlightjs: yes
+  instagram: instagram_id
+  itch_io: itch_io_id
+  latestpostcount: 5
+  linkedin: john-example-aa80ue8è
+  logofile: img/logo.png
+  posts_navigation: yes
+  progressively: yes
+  share: yes
+  small_banner_logo: no
+  social_banner: img/banner.png
+  twitter: example
+  untappd: untappd_id
+  usesmallsummarycard: yes
+  utteranc:
+    enable: yes
+    issueTerm: title
+    repo: mtn/cocoa-eh-hugo-theme

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>It&#39;s Just Calculus</title>
+    <link>/</link>
+    <description>Recent content on It&#39;s Just Calculus</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 01 Dec 2020 21:13:14 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Background</title>
+      <link>/about/</link>
+      <pubDate>Fri, 27 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>How my relationship with biostatistics developedPhysics, not classicalIt started in 10th grade when I became obsessed with quantum physics. Only to the extent that I loved how hard it made my brain work and how my mind was constantly blown. So long story short there was/is like no money, job growth or security in theoretical/astro/experimental/quantum physics.
+My love of researchI moved to Portland for the Social Work program at PSU, then realized it wasn’t aligning to my stress capabilities.</description>
+    </item>
+    
+    <item>
+      <title>Home</title>
+      <link>/home/</link>
+      <pubDate>Fri, 27 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/home/</guid>
+      <description>I intend to make this a beautiful dumping ground to keep my lists of datasets I’d like to use for projects, notes throughout my courses, and projects that I’ve attempted and/or completed throughout my grad program.“It’s Just Calculus” is an overused inside-joke that I have with myself, my 4 year old, partner and my two pups.
+This story begins with a TA who was struggling with his ego a bit and would critique the hell out of my Intro to Biostatistics assignments and tell me things I was supposed to know despite never learning it in class.</description>
+    </item>
+    
+    <item>
+      <title>First Blog</title>
+      <link>/blog/first-blog/</link>
+      <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
+      
+      <guid>/blog/first-blog/</guid>
+      <description>Well this is getting weird</description>
+    </item>
+    
+    <item>
+      <title>First Data Project</title>
+      <link>/projects/first-data-project/</link>
+      <pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/first-data-project/</guid>
+      <description>I intend to put my first data analysis project here in the near future. It was the first time I had used a dataset from Kaggle and used grepl() after days of googling and I cried tears of joy</description>
+    </item>
+    
+    <item>
+      <title>Wisdom from a 4 Year Old</title>
+      <link>/blog/wisdom-from-a-4-year-old/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/wisdom-from-a-4-year-old/</guid>
+      <description>Words from my daughter to the audience
+My tummmmmmy hurts…
+On my BIRTday :(
+200 dollars?! For what?!
+Hey! Here’s a great in in idea! We…. play with bubbles!
+Reminder to future self: remember this. Also put low res copy in low folder, but why? I don’t know.
+CodeThis is some code, maybe try it some time
+.dark {color: #333333 !</description>
+    </item>
+    
+  </channel>
+</rss>

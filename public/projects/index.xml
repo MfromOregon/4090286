@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects on It&#39;s Just Calculus</title>
+    <link>/projects/</link>
+    <description>Recent content in Projects on It&#39;s Just Calculus</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 01 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>First Data Project</title>
+      <link>/projects/first-data-project/</link>
+      <pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/first-data-project/</guid>
+      <description>I intend to put my first data analysis project here in the near future. It was the first time I had used a dataset from Kaggle and used grepl() after days of googling and I cried tears of joy</description>
+    </item>
+    
+  </channel>
+</rss>

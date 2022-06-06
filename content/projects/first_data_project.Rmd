@@ -1,0 +1,14 @@
+---
+title: First Data Project
+author: Saffron Evergreen
+date: '2020-12-01'
+categories:
+  - R
+tags:
+  - plot
+  - R Markdown
+  - regression
+---
+
+
+I intend to put my first data analysis project here in the near future. It was the first time I had used a dataset from Kaggle and used grepl() after days of googling and I cried tears of joy
