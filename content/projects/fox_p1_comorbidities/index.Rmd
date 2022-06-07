@@ -1,11 +1,10 @@
 ---
-title: Fox P1 Comorbidities (upgraded post)
+title: "Fox P1 Comorbidities (upgraded post)"
 author: ''
 date: '2022-06-07'
 slug: fox-p1-comorbidities
 categories: []
-tags:
-  - tags
+tags: tags
 description: Desc
 hacker_news_id: ''
 lobsters_id: ''
