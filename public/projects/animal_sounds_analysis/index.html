@@ -15,8 +15,6 @@ meta_img: /images/image.jpg
 
 
 <p>This was lab 3</p>
-<div id="add-dataset-here" class="section level1">
-<h1>add dataset here</h1>
 <p>This was the code I used to produce a scatterplot that shows at what ages the children in this study were able to make specific animal noises - faceted by the animal sounds.</p>
 <pre class="r"><code>scatterplot_sounds &lt;- ggplot(sounds, aes(x = age, 
   y = prop_produce)) + 
@@ -34,7 +32,4 @@ meta_img: /images/image.jpg
   geom_point(aes(color = sound), size = 2) + 
   # geom_point also grouped by color by sound
   labs(x = &quot;Age (months)&quot;, 
-       y = &quot;Proportion of Children Producing&quot;) 
-
-line_plot_sounds</code></pre>
-</div>
+       y = &quot;Proportion of Children Producing&quot;) </code></pre>

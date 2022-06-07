@@ -1,4 +1,4 @@
-baseurl: "/"
+baseurl: "https://saffronevergreenportfolio.netlify.app/"
 theme: cocoa-eh-hugo-theme
 builddrafts: yes
 canonifyurls: yes

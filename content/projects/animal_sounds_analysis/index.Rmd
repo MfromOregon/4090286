@@ -14,6 +14,8 @@ meta_img: /images/image.jpg
 
 This was lab 3
 
+# add dataset here
+
 This was the code I used to produce a scatterplot that shows at what ages the children in this study were able to make specific animal noises - faceted by the animal sounds.   
 
 
@@ -30,6 +32,7 @@ scatterplot_sounds <- ggplot(sounds, aes(x = age,
 
 This is the code for a line graph that is color coded by animal sounds, not faceted.  
 
+
 ```{r eval=FALSE, include=TRUE}
 line_plot_sounds <- ggplot(sounds, aes(
   x = age, 
@@ -40,5 +43,8 @@ line_plot_sounds <- ggplot(sounds, aes(
   # geom_point also grouped by color by sound
   labs(x = "Age (months)", 
        y = "Proportion of Children Producing") 
+
+line_plot_sounds
 ```
+
 
