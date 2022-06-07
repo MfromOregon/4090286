@@ -1,0 +1,82 @@
+---
+title: MoMA Graph
+author: ''
+date: '2022-06-07'
+slug: moma_viz
+categories: []
+tags:
+  - tags
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+```{r}
+knitr::opts_chunk$set(error = FALSE, comment = NA, warnings = FALSE, errors = FALSE, messages = FALSE, tidy = FALSE, cache = TRUE)
+```
+
+
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(extrafont)
+library(here)
+library(ggthemes)
+library(readr)
+```
+
+This was Lab 2
+
+
+
+```{r}
+library(readr)
+artwork_cleaned <- read_csv("artworks-cleaned.csv")
+```
+
+This was challenge #5 for lab 1, in which the instructions were to make your own plot and then write about it.  
+
+```{r message=FALSE, warning=FALSE}
+moma_chal5 <- artwork_cleaned %>% 
+  mutate(surface_area = (height_cm * width_cm)*.01) %>% # new column labeled hw_ratio, meters squared!
+   filter(num_artists == 1)
+
+
+moma_plot <- moma_chal5 %>% 
+  filter(artist_gender == "Male") %>%
+  ggplot(aes(
+  x = year_acquired,
+  y = surface_area,
+  color = artist_gender)) +
+  geom_line(alpha = 0.4)
+
+# create data with only females to stack onto the males plot
+female_artists <- moma_chal5 %>% 
+  filter(artist_gender == "Female")
+
+moma_plot_all <- moma_plot + 
+  geom_line(data =  female_artists, color = "#800080", alpha = 0.5) +
+  labs(x = "Year Acquired",
+       y = "Painting Surface Area (meters squared)",
+       title = "Surface Area of MoMA Paintings By Gender") +
+   theme_few(base_size = 10) +
+  theme(legend.position = "none") +
+  annotate(x = 1992, y = 6000, geom = "text", 
+           label = "Male Artists", color = "#ee5863", 
+           size = 4, family = "Lato", hjust = 1, fontface = 1) +
+    annotate(x = 2000, y = 9000, geom = "text",  
+             label = "Female Artists", color = "#800080", 
+             size = 4, family = "Lato", hjust = 1, fontface = 1)
+
+moma_plot_all
+```
+
+#### Graph Explanation:  
+
+I had made this graph to compare the surface area of paintings in MoMA by female and male artists. The idea behind this was that I wanted to see if "females" generally produced smaller art compared to "males." Since misogynistic views often are aligned with the idea that women need to make themselves small and dainty, and not to be "too showy" - my thoughts were that there would be a lot of small "female" paintings and larger "male" paintings.  
+
+At a very generalized level, it does look like this might be the case; that female artists produce smaller paintings than male artists.  
+
+

@@ -1,0 +1,236 @@
+---
+title: Nathan's Hotdog Eating Contest Graphic
+author: ''
+date: '2022-03-31'
+slug: nathans_hotdog_eating_contest_graphic
+categories: []
+tags:
+  - tags
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+This was from lab 1   
+
+```{r setup, include = FALSE, cache = FALSE}
+knitr::opts_chunk$set(error = FALSE, comment = NA, warnings = FALSE, errors = FALSE, messages = FALSE, tidy = FALSE, cache = TRUE)
+```
+
+
+
+
+*loaded these packages*
+
+```{r load-packages, echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(extrafont)
+library(here)
+library(ggthemes)
+library(readr)
+```
+
+## Load the main dataset  
+
+```{r load data, eval=FALSE, include=TRUE}
+hot_dogs <- read_csv("content/projects/nathans_hotdog_eating_contest_graphic/hot_dog_contest.csv", col_types = cols(
+  gender = col_factor(levels = NULL))) 
+# using = NULL the code orders it automatically
+%>% 
+  mutate(post_ifoce = year >= 1997) %>%  # boolean T/F
+  filter(year >= 1981 & gender == 'male')
+```
+
+### This will be used at the end, when we isolate the female contestants to stack on the barplot  
+
+```{r load data w fem, eval=FALSE, include=TRUE}
+hdm_females <- read_csv("content/projects/nathans_hotdog_eating_contest_graphic/hot_dog_contest_with_affiliation.csv", 
+    col_types = cols(
+      gender = col_factor(levels = NULL), affiliated = col_factor(levels = NULL)
+    )) %>%
+  mutate(post_ifoce = year >= 1997) %>% 
+  filter(year >= 1981 & gender == "female")
+```
+
+### We will be using hdm_affil primarily in these beginning steps  
+
+```{r}
+hdm_affil <- hot_dogs %>%
+  filter(year >= 1981 & gender == "male") # 1981 greater than or equal to and pulling only male
+```
+
+
+```{r glimpse}
+glimpse(hdm_affil)
+glimpse(hdm_females)
+```
+
+#### Building the barplot    
+
+
+This first code chunk is from the first dataset, 'hot_dogs' which only has 'males.'  
+
+```{r eval=FALSE, include=TRUE}
+ggplot(hot_dogs, aes(x = year, y = num_eaten)) + 
+  geom_col(aes(fill = post_ifoce), 
+           colour = "white")+ 
+  labs(x = "Year", 
+       y = "Hot Dogs and Buns Consumed") +
+  ggtitle("Nathan's Hot Dog Eating Contest Results, 1981-2017") +
+  scale_fill_discrete(name = "",
+  labels=c("Pre-IFOCE", "Post-IFOCE"))
+
+```
+
+#### saving the plot as an item so it can be built on throughout the process  
+
+```{r}
+affil_plot <- hdm_affil %>% ggplot(aes(
+  x = year,
+  y = num_eaten)) + 
+  geom_col(aes(fill = post_ifoce)) +
+  labs(x = "Year",
+       y = "Hot Dogs and Buns Consumed",
+  title = "Nathan's Hot Dog Eating Contest Results, 1981-2017",
+  subtitle = "(Male contestants only)") +
+  scale_fill_manual(values = c('#E9602B','#CCB683'), name = "IFOCE-affiliation") + 
+  coord_cartesian(
+ xlim = c(1980, 2018), 
+ylim = c(0, 80)) 
+```
+
+#### how to add a custom theme  
+
+```{r}
+plot_theme <- theme(plot.title = element_text(hjust = 0.5),
+                     axis.text = element_text(size = 12),
+                     panel.background = element_blank(),
+                    
+axis.line.x = 
+          element_line(color = "gray80", size = 0.5),
+                    
+axis.ticks = 
+          element_line(color = "gray80", size = 0.5),
+                     
+text = 
+          element_text(family = "Lato")) #extrafont
+
+affil_plot + plot_theme
+```
+
+### All combined code, preparing to add annotations  
+
+```{r}
+# custom tick marks  
+years_to_label <- seq(from = 1981, to = 2017, by = 4)   
+
+# add column to use for x-axis  
+hd_years <- hdm_affil %>%
+  distinct(year) %>%
+  mutate(year_lab = ifelse(year %in% years_to_label, year, ""))
+
+# making a fresh plot in order to detail the formatting  
+# this is essentially the same as affil_plot  
+
+nathan_plot <- ggplot(hdm_affil, aes(
+  x = year, y = num_eaten)) + 
+  geom_col(aes(fill = post_ifoce)) + 
+  labs(x = "Year", 
+       y = "Hot Dogs and Buns Consumed", 
+  title = "Nathan's Hot Dog Eating Contest Results, 1981-2017", 
+  subtitle = "(Male contestants only)") +
+  scale_fill_manual(
+    values = c('#E9602B','#CCB683'),
+                    name = "IFOCE-affiliation") + plot_theme 
+
+# save plot with edited axis scales, breaks and tick labels
+nathan_plot <- nathan_plot +
+  scale_y_continuous(expand = c(0, 0),
+                     breaks = seq(0, 70, 10)) +
+  scale_x_continuous(expand = c(0, 0), 
+                     breaks = hd_years$year,
+                     labels = hd_years$year_lab) + 
+  coord_cartesian(xlim = c(1980, 2017), ylim = c(0, 80)) # adjust x and y axis 
+```
+
+
+#### The best part... Adding annotations and removing the legend  
+
+Annotations make reading data visualizations easier and faster to read and understand   
+
+```{r}
+nathan_ann <- nathan_plot +
+  guides(fill = FALSE) +
+
+  coord_cartesian(xlim = c(1980, 2022), ylim = c(0, 90)) +
+  # far left segment
+  annotate('segment', x=1980.75, xend=2000.25, y= 30, yend=30, size=0.5, color="#CCB683")+
+  
+  annotate('segment', x=1980.75, xend=1980.75, y= 30, yend=28, size=0.5, color="#CCB683") +
+ 
+   annotate('segment', x=2000.25, xend=2000.25, y= 30, yend=28, size=0.5, color="#CCB683") +
+ 
+   annotate('segment', x=1990, xend=1990, y= 33, yend=30, size=0.5, color="#CCB683") +
+ 
+   annotate('text', x=1990, y=36, 
+        label="No MLE/IFOCE Affiliation", color="#CCB683", family="Lato", hjust=0.5, size = 3) +
+# middle segment
+  annotate('segment', x=2000.75, xend=2006.25, y= 58, yend=58, size=0.5, color="#2277A0") +
+ 
+   annotate('segment', x=2000.75, xend=2000.75, y= 58, yend=56, size=0.5, color="#2277A0") +
+  
+  annotate('segment', x=2006.25, xend=2006.25, y= 58, yend=56, size=0.5, color="#2277A0") +
+ 
+   annotate('segment', x=2003.5, xend=2003.5, y= 61, yend=58, size=0.5, color="#2277A0") +
+
+    annotate('text', x=2003.5, y=65, 
+        label="MLE/IFOCE\nFormer Member", color="#2277A0", family="Lato", hjust=0.5, size = 3) +
+# far right segment
+ 
+   annotate('segment', x=2006.75, xend=2017.25, y= 79, yend=79, size=0.5, color="#E9602B") +
+ 
+   annotate('segment', x=2006.75, xend=2006.75, y= 79, yend=77, size=0.5, color="#E9602B") +
+  
+  annotate('segment', x=2017.25, xend=2017.25, y= 79, yend=77, size=0.5, color="#E9602B") +
+  
+  annotate('segment', x=2012, xend=2012, y= 82, yend=79, size=0.5, color="#E9602B") +
+  
+  annotate('text', x=2012, y=86, 
+        label="MLE/IFOCE Current Member", color="#E9602B", family="Lato", hjust=0.5, size = 3)
+```
+#### The near-finished barplot; since the female contestants will be the last bit  
+
+```{r}
+nathan_ann
+```
+
+
+### lastly, adding the female contestants   
+
+Use the data.frame created prior labeled, 'hdm_females'. THis isolates the female contestants so they can be stacked within the barplot without overlapping    
+
+As a review, here is how the data.frame was created   
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+hdm_females <- hot_dogs %>% 
+  mutate(post_ifoce = year >= 1997) %>% 
+  filter(year >= 1981 & gender == "female") 
+```
+```{r message=FALSE, warning=FALSE}
+nathan_w_females <- nathan_ann +
+  # add in the female data, and manually set a fill color
+  geom_col(data = hdm_females, 
+           width = 0.75, 
+           fill = "#F68A39") + # orange
+  labs(subtitle = NULL) # no longer need the subtitle warning about male-only data, NULL removes the subtitle
+nathan_w_females
+```
+
+
+Please ignore my off balanced annotations, for time's sake, lets just admire this reproducible code for a later time.   
+
+
+

@@ -1,0 +1,21 @@
+---
+title: "Wisdom from a 4 Year Old"
+author: "Saffron Evergreen"
+date: "5/27/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+*Some words from a 4 year old to anyone who enjoys a quick read*  
+
+> My tummmmmmy hurts...  
+
+> On my BIRTday :(  
+
+> 200 dollars?! For what?!  
+
+> Hey! Here's a great in-in-idea! We.... play with bubbles!  
+

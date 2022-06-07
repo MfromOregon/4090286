@@ -1,0 +1,121 @@
+---
+title: Fox P1 Comorbidities (upgraded post)
+author: ''
+date: '2022-06-07'
+slug: fox-p1-comorbidities
+categories: []
+tags:
+  - tags
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+### The Importance of Studying Rare Genetic Disorders
+
+To keep this brief rather *brief*, but to give a bit of context into my enthusiasm towards genetic syndromes; my daughter was diagnosed with a rare genetic disorder called FoxP1 syndrome; there are just over 100 reported cases internationally [1]. The genetic testing was offered *because* of her physical features, but there are also people with this syndrome that have "milder" characteristics. I have strong feelings that I can't fully articulate about this, but nonetheless it's a piece of the full picture and if the "outside" helps lead to tests to see what's happening on the "inside", then it's a start at least.    
+
+After she turned 2, we had discovered that she had a heart condition that was causing her heart to swell. She appeared "generally well," but her medical team suspected that if she didn't have heart surgery her life expectancy would have been about mid-to-late teens. She had heart surgery with *thankfully* no complications and her expected life span is that of the general population now.   
+
+Stories like this make me wonder how many people out there could get preventative treatments that are more tailored to their genetic makeup, like those with certain cancers that run in the family, hereditary connective tissue disorders like vEDS (vascular ehler's danlos syndrome), clotting disorders, musculoskeletal disorders and so on.  
+
+For a quick conclusion... genetic screening should be covered by insurance and an option for parents to seek out, as genetic screening and preventative measures like this are likely more manageable for the person, the family or caregivers, and medical team. Some are opposed to this due to the fear of rising healthcare costs, which I could rant on how this likely wouldn't be true. However, some also oppose genetic screening due to eugenic ideologies that are unfortunately still pretty prominent, which should be thoroughly assessed, however, I am nowhere near qualified.    
+
+
+
+```{r setup, include = FALSE, cache = FALSE}
+knitr::opts_chunk$set(error = FALSE, comment = NA, warnings = FALSE, errors = FALSE, messages = FALSE, tidy = FALSE, cache = TRUE)
+```
+
+
+
+## Now onto the comorbidity data  
+
+
+```{r packages, message=FALSE, warning=FALSE, include=FALSE}
+
+library(readxl)
+library(devtools)
+library(dplyr)
+library(ggplot2)
+library(ggridges)
+library(janitor)
+library(kableExtra)
+library(knitr)
+library(skimr)
+library(tidyverse)
+library(forcats)
+```
+
+```{r include=FALSE}
+library(readxl)
+fox_p1 <- read_excel("foxp1_comorb.xlsx") %>% janitor::clean_names()
+```
+
+
+This is my final data visualization project, which is an upgrade from my previous project labeled "Fox P1 Physical Characteristics (old post)." For this project, I decided to pitch the idea of using the top 5 physical features or "dysmorphic features," and went with comorbidities.   
+
+With the experience I've had so far, I feel like this data presentation is more helpful, or could be more helpful, since these symptoms or occurrences, would most likely have more of an impact on the childs quality of life (at least temporary until aides can be provided), and overall harder to "overlook."
+
+
+
+### Looking over the dataset  
+
+Shown below, I will be looking at the first and fourth columns, or "comorbidities" and "total_cohort_22."  
+
+```{r}
+glimpse(fox_p1)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+barplot_comorb <- fox_p1 %>%
+  ggplot(aes(
+    fct_rev(fct_reorder(
+      comorbidities, total_cohort_22)),
+    total_cohort_22, fill = comorbidities)) +
+  geom_col() +
+  theme_classic() +
+scale_x_discrete(limit = c("Hypotonia", "Ocular abnormality", "Recurrent infections", "Gait abnormalities", "Feeding issues")) +
+  theme(axis.text.x = element_blank(),
+        legend.position = "none") +
+  labs(title = "FoxP1 Comorbidities",
+       subtitle = "In More Than 50% of Cohort, n = 22",
+       x = "", y = "",
+       caption = "Source: molecularautism.biomedical.com \n
+       https://doi.org/10.1186/s13229-021-00469-z") +
+  scale_fill_discrete(limits = c("Hypotonia", "Ocular abnormality", "Recurrent infections", "Gait abnormalities", "Feeding issues")) + # pulls top 5 most prevalent features
+  coord_flip() +
+  geom_text(aes(label = paste(format(total_cohort_22), "%")),
+            size = 4, hjust = 1.5, color = "light grey", inheret.aes = TRUE) + # add to notes, how to show barplot labels with %
+  scale_fill_hue(h = c(222,223), c = 55, l = 50) +
+  theme(axis.text.y = element_text(size = 10, family = "Helvetica", color = "black")) +
+  theme(plot.title = element_text(size = 18, face = "bold", family = "Helvetica")) +
+  theme(plot.background = element_rect(fill = "light grey"))
+
+
+barplot_comorb
+```
+
+
+#### Information about the dataset  
+
+I had mentioned in my last post that I had gathered the data from the research article ["Individuals with FOXP1 syndrome present with a complex neurobehavioral profile with high rates of ADHD, anxiety, repetitive behaviors, and sensory symptoms"](https://doi.org/10.1186/s13229-021-00469-z).  
+
+I had downloaded the PDFs and converted them into Excel sheets and saved some of the bits that I wanted for this project and possibly for future use. The sample size was a combined cohort of 22 individuals with FoxP1 Syndrome with different genetic variations (missense, deletions, etc.).  
+
+There are only slightly over 100 reported cases of people with FoxP1 syndrome worldwide, so studies like this have very small sample sizes but are still useful in finding similarities among individuals that can help with identifying possible cases, deciding what tests to run after diagnoses (like EKG, EEG, X-rays, etc), or what types of symptoms people with specific FoxP1 mutations might experience.      
+
+
+
+
+
+
+
+
+Source:  
+
+1. Trelles, M.P., Levy, T., Lerman, B. et al. (10 May 2021). Individuals with FOXP1 syndrome present with a complex neurobehavioral profile with high rates of ADHD, anxiety, repetitive behaviors, and sensory symptoms. Molecular Autism 12, 61 (2021). https://doi.org/10.1186/s13229-021-00469-z 
+
+
+

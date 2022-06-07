@@ -1,0 +1,197 @@
+---
+title: Nathan's Hotdog Eating Contest Graphic
+author: ''
+date: '2022-03-31'
+slug: nathans_hotdog_eating_contest_graphic
+categories: []
+tags:
+  - tags
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+
+<p>This was from lab 1</p>
+<p><em>loaded these packages</em></p>
+<pre class="r"><code>library(tidyverse)
+library(extrafont)
+library(here)
+library(ggthemes)
+library(readr)</code></pre>
+<div id="load-the-main-dataset" class="section level2">
+<h2>Load the main dataset</h2>
+<pre class="r"><code>hot_dogs &lt;- read_csv(&quot;content/projects/nathans_hotdog_eating_contest_graphic/hot_dog_contest.csv&quot;, col_types = cols(
+  gender = col_factor(levels = NULL))) 
+# using = NULL the code orders it automatically
+%&gt;% 
+  mutate(post_ifoce = year &gt;= 1997) %&gt;%  # boolean T/F
+  filter(year &gt;= 1981 &amp; gender == &#39;male&#39;)</code></pre>
+<div id="this-will-be-used-at-the-end-when-we-isolate-the-female-contestants-to-stack-on-the-barplot" class="section level3">
+<h3>This will be used at the end, when we isolate the female contestants to stack on the barplot</h3>
+<pre class="r"><code>hdm_females &lt;- read_csv(&quot;content/projects/nathans_hotdog_eating_contest_graphic/hot_dog_contest_with_affiliation.csv&quot;, 
+    col_types = cols(
+      gender = col_factor(levels = NULL), affiliated = col_factor(levels = NULL)
+    )) %&gt;%
+  mutate(post_ifoce = year &gt;= 1997) %&gt;% 
+  filter(year &gt;= 1981 &amp; gender == &quot;female&quot;)</code></pre>
+</div>
+<div id="we-will-be-using-hdm_affil-primarily-in-these-beginning-steps" class="section level3">
+<h3>We will be using hdm_affil primarily in these beginning steps</h3>
+<pre class="r"><code>hdm_affil &lt;- hot_dogs %&gt;%
+  filter(year &gt;= 1981 &amp; gender == &quot;male&quot;) # 1981 greater than or equal to and pulling only male</code></pre>
+<pre><code>Error in filter(., year &gt;= 1981 &amp; gender == &quot;male&quot;): object &#39;hot_dogs&#39; not found</code></pre>
+<pre class="r"><code>glimpse(hdm_affil)</code></pre>
+<pre><code>Error in glimpse(hdm_affil): object &#39;hdm_affil&#39; not found</code></pre>
+<pre class="r"><code>glimpse(hdm_females)</code></pre>
+<pre><code>Error in glimpse(hdm_females): object &#39;hdm_females&#39; not found</code></pre>
+<div id="building-the-barplot" class="section level4">
+<h4>Building the barplot</h4>
+<p>This first code chunk is from the first dataset, ‘hot_dogs’ which only has ‘males.’</p>
+<pre class="r"><code>ggplot(hot_dogs, aes(x = year, y = num_eaten)) + 
+  geom_col(aes(fill = post_ifoce), 
+           colour = &quot;white&quot;)+ 
+  labs(x = &quot;Year&quot;, 
+       y = &quot;Hot Dogs and Buns Consumed&quot;) +
+  ggtitle(&quot;Nathan&#39;s Hot Dog Eating Contest Results, 1981-2017&quot;) +
+  scale_fill_discrete(name = &quot;&quot;,
+  labels=c(&quot;Pre-IFOCE&quot;, &quot;Post-IFOCE&quot;))</code></pre>
+</div>
+<div id="saving-the-plot-as-an-item-so-it-can-be-built-on-throughout-the-process" class="section level4">
+<h4>saving the plot as an item so it can be built on throughout the process</h4>
+<pre class="r"><code>affil_plot &lt;- hdm_affil %&gt;% ggplot(aes(
+  x = year,
+  y = num_eaten)) + 
+  geom_col(aes(fill = post_ifoce)) +
+  labs(x = &quot;Year&quot;,
+       y = &quot;Hot Dogs and Buns Consumed&quot;,
+  title = &quot;Nathan&#39;s Hot Dog Eating Contest Results, 1981-2017&quot;,
+  subtitle = &quot;(Male contestants only)&quot;) +
+  scale_fill_manual(values = c(&#39;#E9602B&#39;,&#39;#CCB683&#39;), name = &quot;IFOCE-affiliation&quot;) + 
+  coord_cartesian(
+ xlim = c(1980, 2018), 
+ylim = c(0, 80)) </code></pre>
+<pre><code>Error in ggplot(., aes(x = year, y = num_eaten)): object &#39;hdm_affil&#39; not found</code></pre>
+</div>
+<div id="how-to-add-a-custom-theme" class="section level4">
+<h4>how to add a custom theme</h4>
+<pre class="r"><code>plot_theme &lt;- theme(plot.title = element_text(hjust = 0.5),
+                     axis.text = element_text(size = 12),
+                     panel.background = element_blank(),
+                    
+axis.line.x = 
+          element_line(color = &quot;gray80&quot;, size = 0.5),
+                    
+axis.ticks = 
+          element_line(color = &quot;gray80&quot;, size = 0.5),
+                     
+text = 
+          element_text(family = &quot;Lato&quot;)) #extrafont
+
+affil_plot + plot_theme</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;affil_plot&#39; not found</code></pre>
+</div>
+</div>
+<div id="all-combined-code-preparing-to-add-annotations" class="section level3">
+<h3>All combined code, preparing to add annotations</h3>
+<pre class="r"><code># custom tick marks  
+years_to_label &lt;- seq(from = 1981, to = 2017, by = 4)   
+
+# add column to use for x-axis  
+hd_years &lt;- hdm_affil %&gt;%
+  distinct(year) %&gt;%
+  mutate(year_lab = ifelse(year %in% years_to_label, year, &quot;&quot;))</code></pre>
+<pre><code>Error in distinct(., year): object &#39;hdm_affil&#39; not found</code></pre>
+<pre class="r"><code># making a fresh plot in order to detail the formatting  
+# this is essentially the same as affil_plot  
+
+nathan_plot &lt;- ggplot(hdm_affil, aes(
+  x = year, y = num_eaten)) + 
+  geom_col(aes(fill = post_ifoce)) + 
+  labs(x = &quot;Year&quot;, 
+       y = &quot;Hot Dogs and Buns Consumed&quot;, 
+  title = &quot;Nathan&#39;s Hot Dog Eating Contest Results, 1981-2017&quot;, 
+  subtitle = &quot;(Male contestants only)&quot;) +
+  scale_fill_manual(
+    values = c(&#39;#E9602B&#39;,&#39;#CCB683&#39;),
+                    name = &quot;IFOCE-affiliation&quot;) + plot_theme </code></pre>
+<pre><code>Error in ggplot(hdm_affil, aes(x = year, y = num_eaten)): object &#39;hdm_affil&#39; not found</code></pre>
+<pre class="r"><code># save plot with edited axis scales, breaks and tick labels
+nathan_plot &lt;- nathan_plot +
+  scale_y_continuous(expand = c(0, 0),
+                     breaks = seq(0, 70, 10)) +
+  scale_x_continuous(expand = c(0, 0), 
+                     breaks = hd_years$year,
+                     labels = hd_years$year_lab) + 
+  coord_cartesian(xlim = c(1980, 2017), ylim = c(0, 80)) # adjust x and y axis </code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;nathan_plot&#39; not found</code></pre>
+<div id="the-best-part-adding-annotations-and-removing-the-legend" class="section level4">
+<h4>The best part… Adding annotations and removing the legend</h4>
+<p>Annotations make reading data visualizations easier and faster to read and understand</p>
+<pre class="r"><code>nathan_ann &lt;- nathan_plot +
+  guides(fill = FALSE) +
+
+  coord_cartesian(xlim = c(1980, 2022), ylim = c(0, 90)) +
+  # far left segment
+  annotate(&#39;segment&#39;, x=1980.75, xend=2000.25, y= 30, yend=30, size=0.5, color=&quot;#CCB683&quot;)+
+  
+  annotate(&#39;segment&#39;, x=1980.75, xend=1980.75, y= 30, yend=28, size=0.5, color=&quot;#CCB683&quot;) +
+ 
+   annotate(&#39;segment&#39;, x=2000.25, xend=2000.25, y= 30, yend=28, size=0.5, color=&quot;#CCB683&quot;) +
+ 
+   annotate(&#39;segment&#39;, x=1990, xend=1990, y= 33, yend=30, size=0.5, color=&quot;#CCB683&quot;) +
+ 
+   annotate(&#39;text&#39;, x=1990, y=36, 
+        label=&quot;No MLE/IFOCE Affiliation&quot;, color=&quot;#CCB683&quot;, family=&quot;Lato&quot;, hjust=0.5, size = 3) +
+# middle segment
+  annotate(&#39;segment&#39;, x=2000.75, xend=2006.25, y= 58, yend=58, size=0.5, color=&quot;#2277A0&quot;) +
+ 
+   annotate(&#39;segment&#39;, x=2000.75, xend=2000.75, y= 58, yend=56, size=0.5, color=&quot;#2277A0&quot;) +
+  
+  annotate(&#39;segment&#39;, x=2006.25, xend=2006.25, y= 58, yend=56, size=0.5, color=&quot;#2277A0&quot;) +
+ 
+   annotate(&#39;segment&#39;, x=2003.5, xend=2003.5, y= 61, yend=58, size=0.5, color=&quot;#2277A0&quot;) +
+
+    annotate(&#39;text&#39;, x=2003.5, y=65, 
+        label=&quot;MLE/IFOCE\nFormer Member&quot;, color=&quot;#2277A0&quot;, family=&quot;Lato&quot;, hjust=0.5, size = 3) +
+# far right segment
+ 
+   annotate(&#39;segment&#39;, x=2006.75, xend=2017.25, y= 79, yend=79, size=0.5, color=&quot;#E9602B&quot;) +
+ 
+   annotate(&#39;segment&#39;, x=2006.75, xend=2006.75, y= 79, yend=77, size=0.5, color=&quot;#E9602B&quot;) +
+  
+  annotate(&#39;segment&#39;, x=2017.25, xend=2017.25, y= 79, yend=77, size=0.5, color=&quot;#E9602B&quot;) +
+  
+  annotate(&#39;segment&#39;, x=2012, xend=2012, y= 82, yend=79, size=0.5, color=&quot;#E9602B&quot;) +
+  
+  annotate(&#39;text&#39;, x=2012, y=86, 
+        label=&quot;MLE/IFOCE Current Member&quot;, color=&quot;#E9602B&quot;, family=&quot;Lato&quot;, hjust=0.5, size = 3)</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;nathan_plot&#39; not found</code></pre>
+</div>
+<div id="the-near-finished-barplot-since-the-female-contestants-will-be-the-last-bit" class="section level4">
+<h4>The near-finished barplot; since the female contestants will be the last bit</h4>
+<pre class="r"><code>nathan_ann</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;nathan_ann&#39; not found</code></pre>
+</div>
+</div>
+<div id="lastly-adding-the-female-contestants" class="section level3">
+<h3>lastly, adding the female contestants</h3>
+<p>Use the data.frame created prior labeled, ‘hdm_females’. THis isolates the female contestants so they can be stacked within the barplot without overlapping</p>
+<p>As a review, here is how the data.frame was created</p>
+<pre class="r"><code>hdm_females &lt;- hot_dogs %&gt;% 
+  mutate(post_ifoce = year &gt;= 1997) %&gt;% 
+  filter(year &gt;= 1981 &amp; gender == &quot;female&quot;) </code></pre>
+<pre class="r"><code>nathan_w_females &lt;- nathan_ann +
+  # add in the female data, and manually set a fill color
+  geom_col(data = hdm_females, 
+           width = 0.75, 
+           fill = &quot;#F68A39&quot;) + # orange
+  labs(subtitle = NULL) # no longer need the subtitle warning about male-only data, NULL removes the subtitle</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;nathan_ann&#39; not found</code></pre>
+<pre class="r"><code>nathan_w_females</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;nathan_w_females&#39; not found</code></pre>
+<p>Please ignore my off balanced annotations, for time’s sake, lets just admire this reproducible code for a later time.</p>
+</div>
+</div>

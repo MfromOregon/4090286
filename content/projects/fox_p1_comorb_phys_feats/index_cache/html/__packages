@@ -1,0 +1,17 @@
+readxl
+usethis
+devtools
+dplyr
+ggplot2
+ggridges
+janitor
+kableExtra
+knitr
+skimr
+tidyverse
+tibble
+tidyr
+readr
+purrr
+stringr
+forcats

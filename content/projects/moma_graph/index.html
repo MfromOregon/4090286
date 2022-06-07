@@ -1,0 +1,73 @@
+---
+title: MoMA Graph
+author: ''
+date: '2022-06-07'
+slug: moma_viz
+categories: []
+tags:
+  - tags
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+
+<pre class="r"><code>knitr::opts_chunk$set(error = FALSE, comment = NA, warnings = FALSE, errors = FALSE, messages = FALSE, tidy = FALSE, cache = TRUE)</code></pre>
+<pre class="r"><code>library(tidyverse)
+library(extrafont)
+library(here)
+library(ggthemes)
+library(readr)</code></pre>
+<p>This was Lab 2</p>
+<pre class="r"><code>library(readr)
+artwork_cleaned &lt;- read_csv(&quot;artworks-cleaned.csv&quot;)</code></pre>
+<pre><code>Rows: 2253 Columns: 23
+-- Column specification --------------------------------------------------------
+Delimiter: &quot;,&quot;
+chr  (6): title, artist, artist_bio, artist_gender, classification, department
+dbl (10): artist_birth_year, artist_death_year, num_artists, n_female_artist...
+lgl  (7): circumference_cm, diameter_cm, length_cm, seat_height_cm, purchase...
+
+i Use `spec()` to retrieve the full column specification for this data.
+i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>This was challenge #5 for lab 1, in which the instructions were to make your own plot and then write about it.</p>
+<pre class="r"><code>moma_chal5 &lt;- artwork_cleaned %&gt;% 
+  mutate(surface_area = (height_cm * width_cm)*.01) %&gt;% # new column labeled hw_ratio, meters squared!
+   filter(num_artists == 1)
+
+
+moma_plot &lt;- moma_chal5 %&gt;% 
+  filter(artist_gender == &quot;Male&quot;) %&gt;%
+  ggplot(aes(
+  x = year_acquired,
+  y = surface_area,
+  color = artist_gender)) +
+  geom_line(alpha = 0.4)
+
+# create data with only females to stack onto the males plot
+female_artists &lt;- moma_chal5 %&gt;% 
+  filter(artist_gender == &quot;Female&quot;)
+
+moma_plot_all &lt;- moma_plot + 
+  geom_line(data =  female_artists, color = &quot;#800080&quot;, alpha = 0.5) +
+  labs(x = &quot;Year Acquired&quot;,
+       y = &quot;Painting Surface Area (meters squared)&quot;,
+       title = &quot;Surface Area of MoMA Paintings By Gender&quot;) +
+   theme_few(base_size = 10) +
+  theme(legend.position = &quot;none&quot;) +
+  annotate(x = 1992, y = 6000, geom = &quot;text&quot;, 
+           label = &quot;Male Artists&quot;, color = &quot;#ee5863&quot;, 
+           size = 4, family = &quot;Lato&quot;, hjust = 1, fontface = 1) +
+    annotate(x = 2000, y = 9000, geom = &quot;text&quot;,  
+             label = &quot;Female Artists&quot;, color = &quot;#800080&quot;, 
+             size = 4, family = &quot;Lato&quot;, hjust = 1, fontface = 1)
+
+moma_plot_all</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div id="graph-explanation" class="section level4">
+<h4>Graph Explanation:</h4>
+<p>I had made this graph to compare the surface area of paintings in MoMA by female and male artists. The idea behind this was that I wanted to see if “females” generally produced smaller art compared to “males.” Since misogynistic views often are aligned with the idea that women need to make themselves small and dainty, and not to be “too showy” - my thoughts were that there would be a lot of small “female” paintings and larger “male” paintings.</p>
+<p>At a very generalized level, it does look like this might be the case; that female artists produce smaller paintings than male artists.</p>
+</div>

@@ -1,0 +1,35 @@
+---
+title: Animal Sounds Analysis
+author: ''
+date: '2022-06-07'
+slug: animal_sounds_analysis
+categories: []
+tags:
+  - tags
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+
+<p>This was lab 3</p>
+<p>This was the code I used to produce a scatterplot that shows at what ages the children in this study were able to make specific animal noises - faceted by the animal sounds.</p>
+<pre class="r"><code>scatterplot_sounds &lt;- ggplot(sounds, aes(x = age, 
+  y = prop_produce)) + 
+  geom_point() +
+  labs(
+    x = &quot;Age (months)&quot;, 
+    y = &quot;Proportion of Children Producing&quot;) +
+  facet_wrap(~sound)</code></pre>
+<p>This is the code for a line graph that is color coded by animal sounds, not faceted.</p>
+<pre class="r"><code>line_plot_sounds &lt;- ggplot(sounds, aes(
+  x = age, 
+  y = prop_produce)) + 
+  geom_line(aes(group = sound)) + 
+  # geom_line is grouped by sound, meaning the lines will connect to each sound group point (3 different line plots vs 1 fully connected line plot)
+  geom_point(aes(color = sound), size = 2) + 
+  # geom_point also grouped by color by sound
+  labs(x = &quot;Age (months)&quot;, 
+       y = &quot;Proportion of Children Producing&quot;) </code></pre>

@@ -1,0 +1,112 @@
+---
+title: Fox P1 Physical Characteristics (old post)
+author: ''
+date: '2022-06-07'
+slug: fox_p1_comorb_phys_feats
+categories: []
+tags:
+  - tags
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+
+```{r setup, include = FALSE, cache = FALSE}
+knitr::opts_chunk$set(error = FALSE, comment = NA, warnings = FALSE, errors = FALSE, messages = FALSE, tidy = FALSE, cache = TRUE)
+```
+
+
+```{r packages, message=FALSE, warning=FALSE, include=FALSE}
+
+library(readxl)
+library(devtools)
+library(dplyr)
+library(ggplot2)
+library(ggridges)
+library(janitor)
+library(kableExtra)
+library(knitr)
+library(skimr)
+library(tidyverse)
+library(forcats)
+fox_p1_dataset <- read_excel("FOXP1DATASET.xlsx")
+fox_p1_dataset <- janitor::clean_names(fox_p1_dataset)
+
+```
+
+
+
+Below is a barplot I created to show the most 5 common physical characteristics, called "dysmorphic features" by many in the research field, in FoxP1 Syndrome.   
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+barplot_feat_5 <- fox_p1_dataset %>%
+  ggplot(aes(
+    fct_rev(fct_reorder(
+      dysmoprhic_features, total_cohort_22)),
+    total_cohort_22, fill = dysmoprhic_features)) +
+  geom_col() +
+  theme_classic() +
+  scale_x_discrete(limit = c("Wide nasal bridge", "Bulbous nose", "Malocclusions", "Hypoplastic / dysplasic nails", "High arched palate")) +
+  theme(axis.text.x = element_blank(),
+        legend.position = "none") +
+  labs(title = "FoxP1 Dysmorphic Features",
+       subtitle = "In More Than 50% of Cohort, n = 22",
+       x = "", y = "",
+       caption = "Source: molecularautism.biomedical.com \n
+       https://doi.org/10.1186/s13229-021-00469-z") +
+  scale_fill_discrete(limits = c("Wide nasal bridge", "Bulbous nose", "Malocclusions", "Hypoplastic / dysplasic nails", "High arched palate")) + # pulls top 5 most prevalent features
+  coord_flip() +
+  geom_text(aes(label = paste(format(total_cohort_22), "%")),
+            size = 4, hjust = 1.5, color = "light grey", inheret.aes = TRUE) + # add to notes, how to show barplot labels with %
+  scale_fill_hue(h = c(269,270), c = 55, l = 30) +
+  theme(axis.text.y = element_text(size = 10, family = "Helvetica", color = "black")) +
+  theme(plot.title = element_text(size = 18, face = "bold", family = "Helvetica")) +
+  theme(plot.background = element_rect(fill = "light grey"))
+       
+barplot_feat_5
+
+```
+  
+
+I had gathered the data from the research article ["Individuals with FOXP1 syndrome present with a complex neurobehavioral profile with high rates of ADHD, anxiety, repetitive behaviors, and sensory symptoms"](https://doi.org/10.1186/s13229-021-00469-z).  
+
+I had downloaded the PDFs and converted them into Excel sheets and saved some of the bits that I wanted for this project and possibly for future use.  
+
+The sample size was a combined cohort of 22 individuals with FoxP1 Syndrome with different genetic variations (missense, deletions, etc.).  
+
+There are only slightly over 100 reported cases of people with FoxP1 syndrome worldwide, so studies like this have very small sample sizes but are still useful in finding similarities among individuals that can help with identifying possible cases, deciding what tests to run after diagnoses (like EKG, EEG, X-rays, etc), or what types of symptoms people with specific FoxP1 mutations might experience.      
+
+### Disclaimer on terminology and definitions
+
+I would also like to note that I am not a fan of the term "dysmorphic features" as it sounds insensitive to individuals with more notable physical features. Dysmorphic features is defined as "human congenital malformations or syndromes," and an "objective assessment of the patient's clinical findings [1]." Which is interesting because clinically diagnosing someone's head as "too big" or mouth as "abnormally shaped" is objective from the context of looking at the general population and finding distinguished features, however, our ableist, racist, classist, plus many more -ists, especially within the medical field is pretty subjective when these "characteristics" are derived from the eugenicist ways of thinking and cause harm to those labeled as such.  
+
+To be fair, I don't know what term could be used instead, but I think just "physical features" would be fine and less "othered" sounding but anyways, I don't know, here are the definitions to said "dysmorphic features" which also scream *objectively* that these come from eugenicist ways of thinking and treating patients.  
+
+#### These definitions do not align with the maker of this barplot...   
+However, it is important to know the clinical definitions and terms used, as a means to understand literature that is already published and to open discussion for changing terminology and overall relevance.   
+
+
+**Definitions:**  
+
+- Wide nasal bridge: the width of the bridge of the nose between the eyes that is wider compared to the relative population  
+- Bulbous nose: tip of the nose that is round and wide compared to the relative population  
+- Malocclusions: when teeth are not aligned "correctly" [2]  
+- Hypoplastic / dysplasic nails: generalized "abnormal" nail structures, typically flattened, pitted, rigid, and/or slow growing [3]
+- High arched palate: arch of the mouth is typically smaller, teeth are more crowded and there is a more defined "depth" in the arch
+
+
+  
+  
+### Further Reading  
+I could rant forever about ableism and eugenics, but I will spare you the time. If you want to read more about ableism click [here](https://disabilityphilanthropy.org/resource/what-is-ableism/) and to read more about eugenics click [here](https://www.genome.gov/about-genomics/fact-sheets/Eugenics-and-Scientific-Racism).   
+
+Sources:        
+  
+[1] Kliegman, Robert, M.. (2020). Dysmorphology. Nelson Textbook of Pediatrics. Retrieved from https://www.sciencedirect.com/topics/medicine-and-dentistry/dysmorphology   
+
+[2] Davies, S. (12 May 2007). Malocclusion – a term in need of dropping or redefinition?. British Dental Journal, 202, 519–520 (2007). https://doi.org/10.1038/bdj.2007.372   
+
+[3] "Nail Abnormalities". (n.d.) nfed. Retrieved from https://www.nfed.org/learn/symptoms/nail-abnormalities/    

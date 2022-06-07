@@ -1,36 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Blog on It&#39;s Just Calculus</title>
-    <link>/blog/</link>
-    <description>Recent content in Blog on It&#39;s Just Calculus</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-US</language>
-    <lastBuildDate>Tue, 01 Dec 2020 21:13:14 -0500</lastBuildDate><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>First Blog</title>
-      <link>/blog/first-blog/</link>
-      <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
-      
-      <guid>/blog/first-blog/</guid>
-      <description>Well this is getting weird</description>
-    </item>
-    
-    <item>
-      <title>Wisdom from a 4 Year Old</title>
-      <link>/blog/wisdom-from-a-4-year-old/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/wisdom-from-a-4-year-old/</guid>
-      <description>Words from my daughter to the audience
-My tummmmmmy hurts…
-On my BIRTday :(
-200 dollars?! For what?!
-Hey! Here’s a great in in idea! We…. play with bubbles!
-Reminder to future self: remember this. Also put low res copy in low folder, but why? I don’t know.
-CodeThis is some code, maybe try it some time
-.dark {color: #333333 !</description>
-    </item>
-    
-  </channel>
-</rss>

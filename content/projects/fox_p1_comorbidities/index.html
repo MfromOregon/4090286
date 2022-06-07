@@ -1,0 +1,50 @@
+---
+title: Fox P1 Comorbidities (upgraded post)
+author: ''
+date: '2022-06-07'
+slug: fox-p1-comorbidities
+categories: []
+tags:
+  - tags
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+
+<div id="the-importance-of-studying-rare-genetic-disorders" class="section level3">
+<h3>The Importance of Studying Rare Genetic Disorders</h3>
+<p>To keep this brief rather <em>brief</em>, but to give a bit of context into my enthusiasm towards genetic syndromes; my daughter was diagnosed with a rare genetic disorder called FoxP1 syndrome; there are just over 100 reported cases internationally [1]. The genetic testing was offered <em>because</em> of her physical features, but there are also people with this syndrome that have “milder” characteristics. I have strong feelings that I can’t fully articulate about this, but nonetheless it’s a piece of the full picture and if the “outside” helps lead to tests to see what’s happening on the “inside”, then it’s a start at least.</p>
+<p>After she turned 2, we had discovered that she had a heart condition that was causing her heart to swell. She appeared “generally well,” but her medical team suspected that if she didn’t have heart surgery her life expectancy would have been about mid-to-late teens. She had heart surgery with <em>thankfully</em> no complications and her expected life span is that of the general population now.</p>
+<p>Stories like this make me wonder how many people out there could get preventative treatments that are more tailored to their genetic makeup, like those with certain cancers that run in the family, hereditary connective tissue disorders like vEDS (vascular ehler’s danlos syndrome), clotting disorders, musculoskeletal disorders and so on.</p>
+<p>For a quick conclusion… genetic screening should be covered by insurance and an option for parents to seek out, as genetic screening and preventative measures like this are likely more manageable for the person, the family or caregivers, and medical team. Some are opposed to this due to the fear of rising healthcare costs, which I could rant on how this likely wouldn’t be true. However, some also oppose genetic screening due to eugenic ideologies that are unfortunately still pretty prominent, which should be thoroughly assessed, however, I am nowhere near qualified.</p>
+</div>
+<div id="now-onto-the-comorbidity-data" class="section level2">
+<h2>Now onto the comorbidity data</h2>
+<p>This is my final data visualization project, which is an upgrade from my previous project labeled “Fox P1 Physical Characteristics (old post).” For this project, I decided to pitch the idea of using the top 5 physical features or “dysmorphic features,” and went with comorbidities.</p>
+<p>With the experience I’ve had so far, I feel like this data presentation is more helpful, or could be more helpful, since these symptoms or occurrences, would most likely have more of an impact on the childs quality of life (at least temporary until aides can be provided), and overall harder to “overlook.”</p>
+<div id="looking-over-the-dataset" class="section level3">
+<h3>Looking over the dataset</h3>
+<p>Shown below, I will be looking at the first and fourth columns, or “comorbidities” and “total_cohort_22.”</p>
+<pre class="r"><code>glimpse(fox_p1)</code></pre>
+<pre><code>Rows: 26
+Columns: 4
+$ Comorbidities      &lt;chr&gt; &quot;Structural brain change&quot;, &quot;Seizures&quot;, &quot;Ocular abno~
+$ `Cohort 1(5)`      &lt;dbl&gt; 0.4, 0.0, 0.6, 0.6, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0~
+$ `Cohort 2(17)`     &lt;dbl&gt; 0.19, 0.18, 0.82, 0.41, 0.35, 0.18, 0.18, 0.12, 0.9~
+$ `Total Cohort(22)` &lt;dbl&gt; 0.24, 0.14, 0.77, 0.45, 0.27, 0.14, 0.14, 0.09, 0.9~</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div id="information-about-the-dataset" class="section level4">
+<h4>Information about the dataset</h4>
+<p>I had mentioned in my last post that I had gathered the data from the research article <a href="https://doi.org/10.1186/s13229-021-00469-z">“Individuals with FOXP1 syndrome present with a complex neurobehavioral profile with high rates of ADHD, anxiety, repetitive behaviors, and sensory symptoms”</a>.</p>
+<p>I had downloaded the PDFs and converted them into Excel sheets and saved some of the bits that I wanted for this project and possibly for future use. The sample size was a combined cohort of 22 individuals with FoxP1 Syndrome with different genetic variations (missense, deletions, etc.).</p>
+<p>There are only slightly over 100 reported cases of people with FoxP1 syndrome worldwide, so studies like this have very small sample sizes but are still useful in finding similarities among individuals that can help with identifying possible cases, deciding what tests to run after diagnoses (like EKG, EEG, X-rays, etc), or what types of symptoms people with specific FoxP1 mutations might experience.</p>
+<p>Source:</p>
+<ol style="list-style-type: decimal">
+<li>Trelles, M.P., Levy, T., Lerman, B. et al. (10 May 2021). Individuals with FOXP1 syndrome present with a complex neurobehavioral profile with high rates of ADHD, anxiety, repetitive behaviors, and sensory symptoms. Molecular Autism 12, 61 (2021). <a href="https://doi.org/10.1186/s13229-021-00469-z" class="uri">https://doi.org/10.1186/s13229-021-00469-z</a></li>
+</ol>
+</div>
+</div>
+</div>
