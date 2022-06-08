@@ -1,11 +1,10 @@
 ---
-title: Animal Sounds Analysis
+title: "Animal Sounds Analysis"
 author: ''
 date: '2022-06-07'
 slug: animal_sounds_analysis
 categories: []
-tags:
-  - tags
+tags: tags
 description: Desc
 hacker_news_id: ''
 lobsters_id: ''

@@ -1,13 +1,12 @@
 ---
-title: First Data Project
-author: Saffron Evergreen
+title: "First Data Project"
+author: "Saffron Evergreen"
 date: '2020-12-01'
-categories:
-  - R
+categories: R
 tags:
-  - plot
-  - R Markdown
-  - regression
+- plot
+- R Markdown
+- regression
 ---
 
 

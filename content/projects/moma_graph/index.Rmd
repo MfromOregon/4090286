@@ -1,11 +1,10 @@
 ---
-title: MoMA Graph
+title: "MoMA Graph"
 author: ''
 date: '2022-06-07'
 slug: moma_viz
 categories: []
-tags:
-  - tags
+tags: tags
 description: Desc
 hacker_news_id: ''
 lobsters_id: ''

@@ -1,11 +1,10 @@
 ---
-title: Fox P1 Physical Characteristics (old post)
+title: "Fox P1 Physical Characteristics (old post)"
 author: ''
 date: '2022-06-07'
 slug: fox_p1_comorb_phys_feats
 categories: []
-tags:
-  - tags
+tags: tags
 description: Desc
 hacker_news_id: ''
 lobsters_id: ''
