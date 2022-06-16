@@ -11,14 +11,84 @@ lobsters_id: ''
 meta_img: /images/image.jpg
 ---
 
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 This was lab 3
 
-# add dataset here
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(readr)
+library(wordbankr)
+library(here)
+library(RColorBrewer)
+library(wesanderson)
+library(ggthemes)
+library(ggsci)
+library(cowplot)
+library(viridis)
+library(forcats)
+library(colorspace)
+library(ggrepel)
+library(ggplot2)
+library(knitr)
+```
+
+
+```{r load data, message=FALSE, warning=FALSE}
+library(readr)
+sounds <- read_csv("animal_sounds_summary.csv")
+```
+
+For the sounds dataset, I'm going to throw in some code here for reference on how to do some exploratory data analysis.  
+
+```{r}
+sounds %>% 
+  group_by(sound) %>%
+  summarize(total_produce = sum(kids_produce)) %>% 
+  knitr::kable()
+
+```
+
+
+This shows the average proportion that was recitable (?) by all the kids in the study.  
+
+```{r}
+sounds %>% group_by(sound) %>% 
+  summarise(total_prop = mean(prop_produce))
+```
+
+
+To show how many ages are counted and what the range of ages are (in months).  
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+sounds %>% distinct(age) %>% count() # 11
+sounds %>% distinct(age) %>% range() # 8 18
+sounds %>% distinct(age) %>% pull() # shows all values
+```
+
+How many kids per age?
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#summarize(new_column_name = function(column_name))
+library(janitor)
+# janitor::adorn_totals() will add a total row at the bottom
+library(knitr)
+sounds %>% 
+  group_by(age) %>%
+  summarize(total_age_months = sum(age)) %>% 
+  adorn_totals() %>%
+  knitr::kable()
+```
 
 This was the code I used to produce a scatterplot that shows at what ages the children in this study were able to make specific animal noises - faceted by the animal sounds.   
 
 
-```{r eval=FALSE, include=TRUE}
+```{r echo=TRUE}
 scatterplot_sounds <- ggplot(sounds, aes(x = age, 
   y = prop_produce)) + 
   geom_point() +
@@ -26,13 +96,14 @@ scatterplot_sounds <- ggplot(sounds, aes(x = age,
     x = "Age (months)", 
     y = "Proportion of Children Producing") +
   facet_wrap(~sound)
+scatterplot_sounds
 ```
 
 
 This is the code for a line graph that is color coded by animal sounds, not faceted.  
 
 
-```{r eval=FALSE, include=TRUE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 line_plot_sounds <- ggplot(sounds, aes(
   x = age, 
   y = prop_produce)) + 

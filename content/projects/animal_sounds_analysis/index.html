@@ -14,8 +14,137 @@ meta_img: /images/image.jpg
 
 
 <p>This was lab 3</p>
-<div id="add-dataset-here" class="section level1">
-<h1>add dataset here</h1>
+<pre class="r"><code>library(tidyverse)
+library(readr)
+library(wordbankr)
+library(here)
+library(RColorBrewer)
+library(wesanderson)
+library(ggthemes)
+library(ggsci)
+library(cowplot)
+library(viridis)
+library(forcats)
+library(colorspace)
+library(ggrepel)
+library(ggplot2)
+library(knitr)</code></pre>
+<pre class="r"><code>library(readr)
+sounds &lt;- read_csv(&quot;animal_sounds_summary.csv&quot;)</code></pre>
+<p>For the sounds dataset, I’m going to throw in some code here for reference on how to do some exploratory data analysis.</p>
+<pre class="r"><code>sounds %&gt;% 
+  group_by(sound) %&gt;%
+  summarize(total_produce = sum(kids_produce)) %&gt;% 
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">sound</th>
+<th align="right">total_produce</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">cockadoodledoo</td>
+<td align="right">148</td>
+</tr>
+<tr class="even">
+<td align="left">meow</td>
+<td align="right">681</td>
+</tr>
+<tr class="odd">
+<td align="left">woof woof</td>
+<td align="right">940</td>
+</tr>
+</tbody>
+</table>
+<p>This shows the average proportion that was recitable (?) by all the kids in the study.</p>
+<pre class="r"><code>sounds %&gt;% group_by(sound) %&gt;% 
+  summarise(total_prop = mean(prop_produce))</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   sound          total_prop
+##   &lt;chr&gt;               &lt;dbl&gt;
+## 1 cockadoodledoo     0.0595
+## 2 meow               0.239 
+## 3 woof woof          0.321</code></pre>
+<p>To show how many ages are counted and what the range of ages are (in months).</p>
+<pre class="r"><code>sounds %&gt;% distinct(age) %&gt;% count() # 11</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##       n
+##   &lt;int&gt;
+## 1    11</code></pre>
+<pre class="r"><code>sounds %&gt;% distinct(age) %&gt;% range() # 8 18</code></pre>
+<pre><code>## [1]  8 18</code></pre>
+<pre class="r"><code>sounds %&gt;% distinct(age) %&gt;% pull() # shows all values</code></pre>
+<pre><code>##  [1]  8  9 10 11 12 13 14 15 16 17 18</code></pre>
+<p>How many kids per age?</p>
+<pre class="r"><code>#summarize(new_column_name = function(column_name))
+library(janitor)
+# janitor::adorn_totals() will add a total row at the bottom
+library(knitr)
+sounds %&gt;% 
+  group_by(age) %&gt;%
+  summarize(total_age_months = sum(age)) %&gt;% 
+  adorn_totals() %&gt;%
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">age</th>
+<th align="right">total_age_months</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">8</td>
+<td align="right">24</td>
+</tr>
+<tr class="even">
+<td align="left">9</td>
+<td align="right">27</td>
+</tr>
+<tr class="odd">
+<td align="left">10</td>
+<td align="right">30</td>
+</tr>
+<tr class="even">
+<td align="left">11</td>
+<td align="right">33</td>
+</tr>
+<tr class="odd">
+<td align="left">12</td>
+<td align="right">36</td>
+</tr>
+<tr class="even">
+<td align="left">13</td>
+<td align="right">39</td>
+</tr>
+<tr class="odd">
+<td align="left">14</td>
+<td align="right">42</td>
+</tr>
+<tr class="even">
+<td align="left">15</td>
+<td align="right">45</td>
+</tr>
+<tr class="odd">
+<td align="left">16</td>
+<td align="right">48</td>
+</tr>
+<tr class="even">
+<td align="left">17</td>
+<td align="right">51</td>
+</tr>
+<tr class="odd">
+<td align="left">18</td>
+<td align="right">54</td>
+</tr>
+<tr class="even">
+<td align="left">Total</td>
+<td align="right">429</td>
+</tr>
+</tbody>
+</table>
 <p>This was the code I used to produce a scatterplot that shows at what ages the children in this study were able to make specific animal noises - faceted by the animal sounds.</p>
 <pre class="r"><code>scatterplot_sounds &lt;- ggplot(sounds, aes(x = age, 
   y = prop_produce)) + 
@@ -23,7 +152,9 @@ meta_img: /images/image.jpg
   labs(
     x = &quot;Age (months)&quot;, 
     y = &quot;Proportion of Children Producing&quot;) +
-  facet_wrap(~sound)</code></pre>
+  facet_wrap(~sound)
+scatterplot_sounds</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>This is the code for a line graph that is color coded by animal sounds, not faceted.</p>
 <pre class="r"><code>line_plot_sounds &lt;- ggplot(sounds, aes(
   x = age, 
@@ -36,4 +167,4 @@ meta_img: /images/image.jpg
        y = &quot;Proportion of Children Producing&quot;) 
 
 line_plot_sounds</code></pre>
-</div>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
