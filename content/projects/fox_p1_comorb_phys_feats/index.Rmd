@@ -18,7 +18,7 @@ knitr::opts_chunk$set(error = FALSE, comment = NA, warnings = FALSE, errors = FA
 ```
 
 
-```{r packages, message=FALSE, warning=FALSE, include=FALSE}
+```{r packages, message=FALSE, warning=FALSE, include=TRUE}
 
 library(readxl)
 library(devtools)
@@ -40,7 +40,7 @@ fox_p1_dataset <- janitor::clean_names(fox_p1_dataset)
 
 Below is a barplot I created to show the most 5 common physical characteristics, called "dysmorphic features" by many in the research field, in FoxP1 Syndrome.   
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 barplot_feat_5 <- fox_p1_dataset %>%
   ggplot(aes(
     fct_rev(fct_reorder(

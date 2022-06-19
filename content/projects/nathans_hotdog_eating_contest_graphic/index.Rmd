@@ -1,11 +1,10 @@
 ---
-title: Nathan's Hotdog Eating Contest Graphic
+title: "Nathan's Hotdog Eating Contest Graphic"
 author: ''
 date: '2022-03-31'
 slug: nathans_hotdog_eating_contest_graphic
 categories: []
-tags:
-  - tags
+tags: tags
 description: Desc
 hacker_news_id: ''
 lobsters_id: ''
@@ -35,19 +34,19 @@ library(readr)
 
 ## Load the main dataset  
 
-```{r load data, eval=FALSE, include=TRUE}
-hot_dogs <- read_csv("content/projects/nathans_hotdog_eating_contest_graphic/hot_dog_contest.csv", col_types = cols(
-  gender = col_factor(levels = NULL))) 
-# using = NULL the code orders it automatically
-%>% 
-  mutate(post_ifoce = year >= 1997) %>%  # boolean T/F
+```{r load data, echo=TRUE, message=FALSE, warning=FALSE}
+library(readr)
+hot_dogs <- read_csv("hot_dogs.csv", col_types = cols(
+  gender = col_factor(levels = NULL))) %>% 
+ #using = NULL the code orders it automatically
+ mutate(post_ifoce = year >= 1997) %>%  # boolean T/F
   filter(year >= 1981 & gender == 'male')
 ```
 
 ### This will be used at the end, when we isolate the female contestants to stack on the barplot  
 
-```{r load data w fem, eval=FALSE, include=TRUE}
-hdm_females <- read_csv("content/projects/nathans_hotdog_eating_contest_graphic/hot_dog_contest_with_affiliation.csv", 
+```{r load data w fem, echo=TRUE, message=FALSE, warning=FALSE}
+hdm_females <- read_csv("hdm_affil.csv", 
     col_types = cols(
       gender = col_factor(levels = NULL), affiliated = col_factor(levels = NULL)
     )) %>%
@@ -57,15 +56,15 @@ hdm_females <- read_csv("content/projects/nathans_hotdog_eating_contest_graphic/
 
 ### We will be using hdm_affil primarily in these beginning steps  
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 hdm_affil <- hot_dogs %>%
   filter(year >= 1981 & gender == "male") # 1981 greater than or equal to and pulling only male
 ```
 
 
-```{r glimpse}
+```{r glimpse, echo=TRUE, message=FALSE, warning=FALSE}
 glimpse(hdm_affil)
-glimpse(hdm_females)
+
 ```
 
 #### Building the barplot    
@@ -73,7 +72,7 @@ glimpse(hdm_females)
 
 This first code chunk is from the first dataset, 'hot_dogs' which only has 'males.'  
 
-```{r eval=FALSE, include=TRUE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 ggplot(hot_dogs, aes(x = year, y = num_eaten)) + 
   geom_col(aes(fill = post_ifoce), 
            colour = "white")+ 
@@ -87,7 +86,7 @@ ggplot(hot_dogs, aes(x = year, y = num_eaten)) +
 
 #### saving the plot as an item so it can be built on throughout the process  
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 affil_plot <- hdm_affil %>% ggplot(aes(
   x = year,
   y = num_eaten)) + 
@@ -104,7 +103,7 @@ ylim = c(0, 80))
 
 #### how to add a custom theme  
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 plot_theme <- theme(plot.title = element_text(hjust = 0.5),
                      axis.text = element_text(size = 12),
                      panel.background = element_blank(),
@@ -123,7 +122,7 @@ affil_plot + plot_theme
 
 ### All combined code, preparing to add annotations  
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 # custom tick marks  
 years_to_label <- seq(from = 1981, to = 2017, by = 4)   
 
@@ -161,7 +160,7 @@ nathan_plot <- nathan_plot +
 
 Annotations make reading data visualizations easier and faster to read and understand   
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 nathan_ann <- nathan_plot +
   guides(fill = FALSE) +
 
@@ -203,7 +202,7 @@ nathan_ann <- nathan_plot +
 ```
 #### The near-finished barplot; since the female contestants will be the last bit  
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 nathan_ann
 ```
 
@@ -219,7 +218,9 @@ hdm_females <- hot_dogs %>%
   mutate(post_ifoce = year >= 1997) %>% 
   filter(year >= 1981 & gender == "female") 
 ```
-```{r message=FALSE, warning=FALSE}
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 nathan_w_females <- nathan_ann +
   # add in the female data, and manually set a fill color
   geom_col(data = hdm_females, 

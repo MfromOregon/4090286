@@ -13,7 +13,45 @@ meta_img: /images/image.jpg
 
 
 
+<pre class="r"><code>library(readxl)
+library(devtools)
+library(dplyr)
+library(ggplot2)
+library(ggridges)
+library(janitor)
+library(kableExtra)
+library(knitr)
+library(skimr)
+library(tidyverse)
+library(forcats)
+fox_p1_dataset &lt;- read_excel(&quot;FOXP1DATASET.xlsx&quot;)
+fox_p1_dataset &lt;- janitor::clean_names(fox_p1_dataset)</code></pre>
 <p>Below is a barplot I created to show the most 5 common physical characteristics, called “dysmorphic features” by many in the research field, in FoxP1 Syndrome.</p>
+<pre class="r"><code>barplot_feat_5 &lt;- fox_p1_dataset %&gt;%
+  ggplot(aes(
+    fct_rev(fct_reorder(
+      dysmoprhic_features, total_cohort_22)),
+    total_cohort_22, fill = dysmoprhic_features)) +
+  geom_col() +
+  theme_classic() +
+  scale_x_discrete(limit = c(&quot;Wide nasal bridge&quot;, &quot;Bulbous nose&quot;, &quot;Malocclusions&quot;, &quot;Hypoplastic / dysplasic nails&quot;, &quot;High arched palate&quot;)) +
+  theme(axis.text.x = element_blank(),
+        legend.position = &quot;none&quot;) +
+  labs(title = &quot;FoxP1 Dysmorphic Features&quot;,
+       subtitle = &quot;In More Than 50% of Cohort, n = 22&quot;,
+       x = &quot;&quot;, y = &quot;&quot;,
+       caption = &quot;Source: molecularautism.biomedical.com \n
+       https://doi.org/10.1186/s13229-021-00469-z&quot;) +
+  scale_fill_discrete(limits = c(&quot;Wide nasal bridge&quot;, &quot;Bulbous nose&quot;, &quot;Malocclusions&quot;, &quot;Hypoplastic / dysplasic nails&quot;, &quot;High arched palate&quot;)) + # pulls top 5 most prevalent features
+  coord_flip() +
+  geom_text(aes(label = paste(format(total_cohort_22), &quot;%&quot;)),
+            size = 4, hjust = 1.5, color = &quot;light grey&quot;, inheret.aes = TRUE) + # add to notes, how to show barplot labels with %
+  scale_fill_hue(h = c(269,270), c = 55, l = 30) +
+  theme(axis.text.y = element_text(size = 10, family = &quot;Helvetica&quot;, color = &quot;black&quot;)) +
+  theme(plot.title = element_text(size = 18, face = &quot;bold&quot;, family = &quot;Helvetica&quot;)) +
+  theme(plot.background = element_rect(fill = &quot;light grey&quot;))
+       
+barplot_feat_5</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>I had gathered the data from the research article <a href="https://doi.org/10.1186/s13229-021-00469-z">“Individuals with FOXP1 syndrome present with a complex neurobehavioral profile with high rates of ADHD, anxiety, repetitive behaviors, and sensory symptoms”</a>.</p>
 <p>I had downloaded the PDFs and converted them into Excel sheets and saved some of the bits that I wanted for this project and possibly for future use.</p>

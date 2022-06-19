@@ -22,6 +22,19 @@ meta_img: /images/image.jpg
 </div>
 <div id="now-onto-the-comorbidity-data" class="section level2">
 <h2>Now onto the comorbidity data</h2>
+<pre class="r"><code>library(readxl)
+library(devtools)
+library(dplyr)
+library(ggplot2)
+library(ggridges)
+library(janitor)
+library(kableExtra)
+library(knitr)
+library(skimr)
+library(tidyverse)
+library(forcats)</code></pre>
+<pre class="r"><code>library(readxl)
+fox_p1 &lt;- read_excel(&quot;foxp1_comorb.xlsx&quot;) %&gt;% janitor::clean_names() # ALWAYS do the clean_names() function first thing</code></pre>
 <p>This is my final data visualization project, which is an upgrade from my previous project labeled “Fox P1 Physical Characteristics (old post).” For this project, I decided to pitch the idea of using the top 5 physical features or “dysmorphic features,” and went with comorbidities.</p>
 <p>With the experience I’ve had so far, I feel like this data presentation is more helpful, or could be more helpful, since these symptoms or occurrences, would most likely have more of an impact on the childs quality of life (at least temporary until aides can be provided), and overall harder to “overlook.”</p>
 <div id="looking-over-the-dataset" class="section level3">
@@ -30,10 +43,36 @@ meta_img: /images/image.jpg
 <pre class="r"><code>glimpse(fox_p1)</code></pre>
 <pre><code>Rows: 26
 Columns: 4
-$ Comorbidities      &lt;chr&gt; &quot;Structural brain change&quot;, &quot;Seizures&quot;, &quot;Ocular abno~
-$ `Cohort 1(5)`      &lt;dbl&gt; 0.4, 0.0, 0.6, 0.6, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0~
-$ `Cohort 2(17)`     &lt;dbl&gt; 0.19, 0.18, 0.82, 0.41, 0.35, 0.18, 0.18, 0.12, 0.9~
-$ `Total Cohort(22)` &lt;dbl&gt; 0.24, 0.14, 0.77, 0.45, 0.27, 0.14, 0.14, 0.09, 0.9~</code></pre>
+$ comorbidities   &lt;chr&gt; &quot;Structural brain change&quot;, &quot;Seizures&quot;, &quot;Ocular abnorma~
+$ cohort_1_5      &lt;dbl&gt; 0.4, 0.0, 0.6, 0.6, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0,~
+$ cohort_2_17     &lt;dbl&gt; 0.19, 0.18, 0.82, 0.41, 0.35, 0.18, 0.18, 0.12, 0.94, ~
+$ total_cohort_22 &lt;dbl&gt; 0.24, 0.14, 0.77, 0.45, 0.27, 0.14, 0.14, 0.09, 0.95, ~</code></pre>
+<pre class="r"><code>barplot_comorb &lt;- fox_p1 %&gt;%
+  ggplot(aes(
+    fct_rev(fct_reorder(
+      comorbidities, total_cohort_22)),
+    total_cohort_22, fill = comorbidities)) +
+  geom_col() +
+  theme_classic() +
+scale_x_discrete(limit = c(&quot;Hypotonia&quot;, &quot;Ocular abnormality&quot;, &quot;Recurrent infections&quot;, &quot;Gait abnormalities&quot;, &quot;Feeding issues&quot;)) +
+  theme(axis.text.x = element_blank(),
+        legend.position = &quot;none&quot;) +
+  labs(title = &quot;FoxP1 Comorbidities&quot;,
+       subtitle = &quot;In More Than 50% of Cohort, n = 22&quot;,
+       x = &quot;&quot;, y = &quot;&quot;,
+       caption = &quot;Source: molecularautism.biomedical.com \n
+       https://doi.org/10.1186/s13229-021-00469-z&quot;) +
+  scale_fill_discrete(limits = c(&quot;Hypotonia&quot;, &quot;Ocular abnormality&quot;, &quot;Recurrent infections&quot;, &quot;Gait abnormalities&quot;, &quot;Feeding issues&quot;)) + # pulls top 5 most prevalent features
+  coord_flip() +
+  geom_text(aes(label = paste(format(total_cohort_22), &quot;%&quot;)),
+            size = 4, hjust = 1.5, color = &quot;light grey&quot;, inheret.aes = TRUE) + # add to notes, how to show barplot labels with %
+  scale_fill_hue(h = c(222,223), c = 55, l = 50) +
+  theme(axis.text.y = element_text(size = 10, family = &quot;Helvetica&quot;, color = &quot;black&quot;)) +
+  theme(plot.title = element_text(size = 18, face = &quot;bold&quot;, family = &quot;Helvetica&quot;)) +
+  theme(plot.background = element_rect(fill = &quot;light grey&quot;))
+
+
+barplot_comorb</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <div id="information-about-the-dataset" class="section level4">
 <h4>Information about the dataset</h4>

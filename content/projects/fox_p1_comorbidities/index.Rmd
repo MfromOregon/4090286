@@ -32,7 +32,7 @@ knitr::opts_chunk$set(error = FALSE, comment = NA, warnings = FALSE, errors = FA
 ## Now onto the comorbidity data  
 
 
-```{r packages, message=FALSE, warning=FALSE, include=FALSE}
+```{r packages, message=FALSE, warning=FALSE, include=TRUE}
 
 library(readxl)
 library(devtools)
@@ -47,9 +47,9 @@ library(tidyverse)
 library(forcats)
 ```
 
-```{r include=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 library(readxl)
-fox_p1 <- read_excel("foxp1_comorb.xlsx") %>% janitor::clean_names()
+fox_p1 <- read_excel("foxp1_comorb.xlsx") %>% janitor::clean_names() # ALWAYS do the clean_names() function first thing
 ```
 
 
@@ -63,11 +63,11 @@ With the experience I've had so far, I feel like this data presentation is more 
 
 Shown below, I will be looking at the first and fourth columns, or "comorbidities" and "total_cohort_22."  
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 glimpse(fox_p1)
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 barplot_comorb <- fox_p1 %>%
   ggplot(aes(
     fct_rev(fct_reorder(
